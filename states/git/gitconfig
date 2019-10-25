@@ -1,0 +1,88 @@
+[user]
+
+
+[core]
+        editor = nvim
+	hooksPath = /tmp/a290074/1.0.0-136-gbcb0af7-dev/git/hooks
+
+[color]
+        ui = true
+
+[color "branch"]
+        current = yellow reverse
+        local = yellow
+        remote = green
+
+[color "diff"]
+        meta = yellow bold
+        frag = magenta bold
+        old = red bold
+        new = green bold
+
+[color "status"]
+        added = yellow
+        changed = green
+        untracked = red
+
+[alias]
+        co = checkout           # Checkout a branch
+        cob = checkout -b       # Checkout a new not yet existing branch
+        f  = fetch -p           # Fetch from a repository and prune any remote-tracking references that no longer exist on the remote
+        cm = commit -m          # Commit with message
+        cma = commit -am        # Add current tracked files and commit with message
+
+        ba = branch -a          # List both remote-tracking branches and local branches
+        bd = branch -d          # Delete a branch only if it has been merged
+        bD = branch -D          # Force delete a branch
+        br = branch -av         # Show all branches
+
+        brname = !git branch | grep "^*" | awk '{ print $2 }' # Show the current branch name (useful for shell prompts)
+
+        dc  = diff --cached       # Display the staged changes
+        ec = config --global -e   # Open .gitlog
+        st = status -sb           # Status of the commit you’re working on
+        ap = add -p               # Add parts of your changes
+
+        tags = tag -l             # List all tags
+
+        r = !git ls-files -z --deleted | xargs -0 git rm                    # Remove deleted files
+        l = "!f() { git log $* | grep '^commit ' | cut -f 2 -d ' '; }; f"   # Return a list of commit SHA1s
+
+        lo = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+        slog = log --oneline --decorate --graph --all
+        llog = log --pretty=format:'%C(auto)%h %C(yellow)%C(red)%ad %C(blue)%aN %aE %C(auto)%d%C(green) %s' --date=short
+        plog = log --graph --pretty='format:%C(red)%d%C(reset) %C(yellow)%h%C(reset) %ar %C(green)%aN%C(reset) %s'
+        tlog = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
+        hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+        
+        # List of all files that has ever existed (including deleted files).
+        fhist = log --pretty=format: --name-only --diff-filter=A | sort - | sed '/^$/d'
+        
+        # View a pretty git log with branch tree
+        g = !git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+        details = log -n1 -p --format=fuller        # View the log and diff for a commit (previous if no SHA1 provided)
+        fmaster = ls-tree -r master --name-only     # Current files tracked by master.
+        rank = shortlog -sn --no-merges             # Contributors ordered by number of merges.
+        root = rev-parse --show-toplevel            # Return the repository's root directory (usefull for shell prompts)
+
+        this = !git init && git add . && git commmit -m \"Initial commit.\"      # Start a new local repository and perform initial commit
+        l = "!f() { git log $* | grep '^commit ' | cut -f 2 -d ' '; }; f"        # Return a list of commit SHA1s
+        bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d"    # Remove merged branches.
+
+        # Commit everything and do a hard reset, commit reachable through reflog.
+        wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+
+        up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+
+        # Clean up merged branches, run from master.
+        bclean = "!f() { git checkout ${1-master} && git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs git branch -d; }; f"
+
+        # Switch to master, bring master up to date with origin, delete merged branches.
+        bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+
+        # Save a repo as a tarball
+        export = archive -o latest.tar.gz -9 --prefix=latest/
+
+        # Which files are receiving the most "love"
+        churn = !git log --all -M -C --name-only --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print "count,file"} {print $1 "," $2}'
