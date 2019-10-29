@@ -3,7 +3,6 @@
 
 [core]
         editor = nvim
-	hooksPath = /tmp/a290074/1.0.0-136-gbcb0af7-dev/git/hooks
 
 [color]
         ui = true
