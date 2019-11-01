@@ -34,7 +34,8 @@ else
   fi
 
 
-  echo "$user_name ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$user_name
+  # Allow user to use sudo without password
+  echo "$user_name ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user_name
   chmod 0440 /etc/sudoers.d/$user_name
   chown $user_name $HOME
 
@@ -42,10 +43,14 @@ else
     chown -R $user_name /tmp/$user_name
   fi
 
+  # Ability to run Salt as user
+  chown -R $user_name /etc/salt /var/cache/salt /var/log/salt /var/run/salt
 
   # Create a file in /tmp to use for synchronization check
   touch /tmp/initializationDone
 
+
+  # If arguments are passed, execute them; otherwise, run bash
   if [[ "$@" != "" ]]; then
     exec sudo -H -E -u $user_name "$@"
   else

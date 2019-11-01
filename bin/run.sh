@@ -4,7 +4,7 @@ set -eu
 set -o pipefail
 
 
-user=$(whoami)
+user=$USER
 homedir=$HOME
 statesdir=$(pwd)/states
 
