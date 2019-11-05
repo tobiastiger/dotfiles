@@ -5,6 +5,8 @@ set -e
 # Docker image to use
 docker_image=dotfiles
 
+repo_dir=$(pwd)
+
 
 # Misc. arguments
 interactive="-it"
@@ -25,9 +27,12 @@ run_args="-v ${host_home:-$HOME}/.ssh:/home/user/.ssh \
           -e local_group_names=${local_group_names// /,} \
           --init"
 
+# Setup Salt volumes
+run_args=$run_args" -v /etc/salt:/etc/salt \
+                    -v /var/cache/salt:/var/cache/salt \
+                    -v /var/run/salt:/var/run/salt"
 
 # Mount current directory
-repo_dir=$(pwd)
 run_args=$run_args" -v $(pwd -P):$repo_dir -w $repo_dir"
 
 
