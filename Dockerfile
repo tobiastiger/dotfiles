@@ -6,9 +6,6 @@ FROM ubuntu
 SHELL [ "/bin/bash", "-c" ]
 
 
-ENV DEBIAN_FRONTEND noninteractive
-
-
 RUN mkdir -p $HOME/.ssh && \
     ln -s /run/secrets/id_rsa $HOME/.ssh/id_rsa
 
@@ -19,15 +16,17 @@ RUN set -eux && \
     apt-get install -y gosu && \
     rm -rf /var/lib/apt/lists/* && \
     gosu nobody true
-    
 
-WORKDIR /home/${USER}
+
+# Make sure Salt installation does not ask for input
+ENV DEBIAN_FRONTEND noninteractive
 
 
 RUN apt-get update && \
     apt-get install -y \
         sudo \
         vim \
+        git \
         salt-minion
 
 

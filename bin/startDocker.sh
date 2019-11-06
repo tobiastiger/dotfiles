@@ -35,6 +35,7 @@ local_group_names=$(cut -d ' ' -f 2- <<< $(id -Gn))
 
 run_args="-v ${host_home:-$HOME}/.ssh:/home/user/.ssh \
           -e USER \
+          -e HOME \
           -e local_user_id=$(id -u) \
           -e local_group_id=$(id -g) \
           -e local_group_name=$(id -ng) \
