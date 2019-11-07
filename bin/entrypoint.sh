@@ -48,7 +48,7 @@ else
 
 
   # Ability to run Salt as user
-  chown -R $user_name /etc/salt /var/cache/salt /var/log/salt /var/run/salt
+  chown -R $user_name:$group_name /etc/salt /var/cache/salt /var/log/salt /var/run/salt
 
 
   # Create a file in /tmp to use for synchronization check
