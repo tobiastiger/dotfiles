@@ -8,7 +8,7 @@ docker_image=dotfiles
 repo_dir=$(pwd)
 
 
-cmd=""
+cmd="bash"
 detached_mode=""
 dockerfile=""
 dry_run=""
@@ -33,7 +33,8 @@ local_group_ids=$(cut -d ' ' -f 2- <<< $(id -G))
 local_group_names=$(cut -d ' ' -f 2- <<< $(id -Gn))
 
 
-run_args="-v ${host_home:-$HOME}/.ssh:/home/user/.ssh \
+run_args="-u 0:0 \
+          -v ${host_home:-$HOME}/.ssh:/home/user/.ssh \
           -e USER \
           -e HOME \
           -e local_user_id=$(id -u) \
@@ -41,7 +42,8 @@ run_args="-v ${host_home:-$HOME}/.ssh:/home/user/.ssh \
           -e local_group_name=$(id -ng) \
           -e local_group_ids=${local_group_ids// /,} \
           -e local_group_names=${local_group_names// /,} \
-          --init"
+          --init \
+          --rm"
 
 
 # Mount current directory as r/w or r only
