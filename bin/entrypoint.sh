@@ -28,11 +28,11 @@ else
 
   # Create and add any extra groups
   if [ ! -z "$local_group_names" ]; then
-    useradd -M --no-user-group --home-dir /home/$user_name --shell /bin/bash -u $user_id -g $group_id -G $local_group_names -c "" $user_name
+    useradd -M --no-user-group --home /home/$user_name --shell /bin/bash --uid $user_id --gid $local_group_id --groups $local_group_names -c "" $user_name
   else
-    useradd -M --no-user-group --home-dir /home/$user_name --shell /bin/bash -u $user_id -g $group_id -c "" $user_name
+    useradd -M --no-user-group --home /home/$user_name --shell /bin/bash --uid $user_id --gid $local_group_id  -c "" $user_name
   fi
-
+  
 
   # Allow user to use sudo without password
   echo "$user_name ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$user_name
@@ -53,7 +53,6 @@ else
 
   # Create a file in /tmp to use for synchronization check
   touch /tmp/initializationDone
-
 
   # If arguments are passed, execute them; otherwise, run bash
   if [[ "$@" != "" ]]; then
