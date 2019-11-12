@@ -7,7 +7,6 @@ nvim-config:
     - name: {{ grains.homedir }}/.config/nvim
     - target: {{ grains.statesdir }}/nvim/nvim
     - makedirs: True
-    - user: {{ grains.user }}
     - force: True
     - backup: "nvim-backup"
 

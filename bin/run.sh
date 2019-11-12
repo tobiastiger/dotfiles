@@ -12,7 +12,7 @@ os=$(uname)
 
 # Set up grains if they don't exist
 if [ ! -f grains ]; then
-  salt-call --local --config=./ grains.setvals "{ \
+  salt-call --config=./ grains.setvals "{ \
     \"user\": \"${user}\", \
     \"homedir\": \"${homedir}\", \
     \"statesdir\": \"${statesdir}\", \
