@@ -10,5 +10,15 @@ tmux-config:
   file.symlink:
     - name: {{ grains.homedir }}/.tmux.conf
     - target: {{ grains.statesdir }}/tmux/tmux-conf
+    - user: {{ grains.user }}
+    - group: {{ grains.group }}
     - force: True
     - backup: "tmux-backup"
+
+{{ grains.homedir }}/.tmux:
+  file.directory:
+    - user: {{ grains.user }}
+    - group: {{ grains.group }}
+    - recurse:
+      - user
+      - group
