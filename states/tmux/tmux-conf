@@ -1,4 +1,11 @@
 set -g default-terminal 'tmux-256color'
+set -g base-index 1
+setw -g pane-base-index 1
+
+# Remap prefix from 'C-b' to 'C-a'
+unbind C-b
+set-option -g prefix C-a
+bind-key C-a send-prefix
 
 # Easy config reload
 bind r source-file ~/.tmux.conf
@@ -9,6 +16,39 @@ bind - split-window -v
 unbind '"'
 unbind %
 
+bind H resize-pane -L 5
+bind J resize-pane -D 5
+bind K resize-pane -U 5
+bind L resize-pane -R 5
+
+# Hide/show statusbar
+bind-key -n S-Up set-option -g status
+bind-key -n S-Down set-option -g status
+
+bind-key -n S-Left previous-window
+bind-key -n S-Right next-window
+
+
+#----------------------------------------Theme----------------------------------------
+# Status line
+set -g status-style default
+set -g status-right-length 80
+set -g status-left-length 100
+set -g window-status-separator "" 
+set -g status-bg black
+
+# Bars ---------------------------------
+set -g status-left "#[fg=green]  #S |"
+set -g status-right "#{sysstat_cpu} | #{sysstat_mem} |#[fg=green] %Y-%m-%d | %H:%M #[fg=brightwhite] #(whoami) "
+
+# Windows ------------------------------
+set -g status-justify left
+set -g window-status-format "#[fg=brightwhite] #W"
+#set -g window-status-current-format "#[fg=yellow] #W"
+set -g window-status-current-format "#{?window_zoomed_flag,#[fg=yellow] ,}#[fg=yellow] #W"
+
+
+#------------------------------------Plugins-------------------------------------------
 # Smart pane switching with awareness of Vim splits.
 # See: https://github.com/christoomey/vim-tmux-navigator
 is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
@@ -23,3 +63,13 @@ bind-key -T copy-mode-vi C-j select-pane -D
 bind-key -T copy-mode-vi C-k select-pane -U
 bind-key -T copy-mode-vi C-l select-pane -R
 bind-key -T copy-mode-vi C-\ select-pane -l
+
+set -g @plugin 'tmux-plugins/tpm'
+
+set -g @plugin 'samoshkin/tmux-plugin-sysstat'
+set -g @sysstat_cpu_view_tmpl '#[fg=cyan]CPU:#[default] #[fg=#{cpu.color}]#{cpu.pused}#[default]'
+set -g @sysstat_mem_view_tmpl '#[fg=blue]MEM:#[default] #[fg=#{mem.color}]#{mem.pused}#[default]'
+set -g status-interval 3
+
+# Instantiate plugin manager for tmux
+run -b '~/.tmux/plugins/tpm/tpm'
