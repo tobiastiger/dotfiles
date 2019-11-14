@@ -37,3 +37,11 @@ sauce-code-pro-extra-light:
     - source: {{ grains.statesdir }}/fonts/sauce-code-pro/SauceCodePro-Light.ttf
     - makedirs: True
     {% endif %}
+
+{{ grains.homedir }}/.local:
+  file.directory:
+    - user: {{ grains.user }}
+    - group: {{ grains.group }}
+    - recurse:
+      - user
+      - group
