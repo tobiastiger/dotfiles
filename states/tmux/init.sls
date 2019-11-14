@@ -1,6 +1,11 @@
 tmux:
   pkg.installed
 
+tmux-plugin-manager:
+  git.latest:
+    - name: https://github.com/tmux-plugins/tpm
+    - target: {{ grains.homedir }}/.tmux/plugins/tpm
+
 tmux-config:
   file.symlink:
     - name: {{ grains.homedir }}/.tmux.conf
