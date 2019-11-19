@@ -1,5 +1,6 @@
-tmux:
-  pkg.installed
+install-tmux:
+  pkg.installed:
+    - name: tmux
 
 tmux-plugin-manager:
   git.latest:
