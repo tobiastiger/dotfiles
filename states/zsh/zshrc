@@ -24,16 +24,10 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-
-autoload -U promptinit; promptinit
-prompt spaceship
-
-
 alias v="nvim"
 
 
 # This is something for git so that certain commands know what branch to go against
 export REVIEW_BASE=master
 
-
-eval "$(direnv hook zsh)"
+export LC_ALL=en_US.UTF-8
