@@ -31,6 +31,11 @@ spaceship-prompt-oh-my-zsh:
     - target: {{ grains.homedir }}/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme
     - force: True
 
+syntax-highlightning:
+  git.latest:
+    - name: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    - target: {{ grains.homedir }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
 {{ grains.homedir }}/.oh-my-zsh:
   file.directory:
     - user: {{ grains.user }}
