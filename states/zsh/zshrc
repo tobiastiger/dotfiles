@@ -19,6 +19,7 @@ SPACESHIP_ELIXIR_SYMBOL=" "
 plugins=(
   git
   docker
+  zsh-syntax-highlighting
   history-substring-search
 )
 
