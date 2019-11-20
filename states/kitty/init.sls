@@ -6,8 +6,9 @@ configs:
     - force: True
     - backupname: "kitty-backup"
 
-{{ grains.homedir }}/.config:
+restore-kitty-permissions:
   file.directory:
+    - name: {{ grains.homedir }}/.config
     - user: {{ grains.user }}
     - group: {{ grains.group }}
     - recurse:
