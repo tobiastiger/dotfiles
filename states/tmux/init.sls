@@ -16,8 +16,9 @@ tmux-config:
     - force: True
     - backup: "tmux-backup"
 
-{{ grains.homedir }}/.tmux:
+restore-tmux-permissions:
   file.directory:
+    - name: {{ grains.homedir }}/.tmux
     - user: {{ grains.user }}
     - group: {{ grains.group }}
     - recurse:
