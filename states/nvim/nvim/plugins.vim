@@ -12,6 +12,7 @@ call minpac#add('christoomey/vim-tmux-navigator')   " Navigation between vim and
 
 " Status and UI
 call minpac#add('itchyny/lightline.vim')
+call minpac#add('scrooloose/nerdtree')
 
 "-------------------------- Themes -------------------------
 
