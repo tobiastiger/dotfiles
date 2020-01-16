@@ -8,10 +8,9 @@ nvim-config:
     - target: {{ grains.statesdir }}/nvim/nvim
     - makedirs: True
     - force: True
-    - backup: "nvim-backup"
 
 minpac:
-  git.latest:
+  git.cloned:
     - name: https://github.com/k-takata/minpac.git
     - target: {{ grains.homedir }}/.local/share/nvim/site/pack/minpac/opt/minpac
 

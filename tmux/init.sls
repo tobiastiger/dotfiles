@@ -3,7 +3,7 @@ install-tmux:
     - name: tmux
 
 tmux-plugin-manager:
-  git.latest:
+  git.cloned:
     - name: https://github.com/tmux-plugins/tpm
     - target: {{ grains.homedir }}/.tmux/plugins/tpm
 
@@ -13,8 +13,6 @@ tmux-config:
     - target: {{ grains.statesdir }}/tmux/tmux-conf
     - user: {{ grains.user }}
     - group: {{ grains.group }}
-    - force: True
-    - backup: "tmux-backup"
 
 restore-tmux-permissions:
   file.directory:
