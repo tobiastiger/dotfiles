@@ -4,3 +4,4 @@ base:
     - kitty
     - nvim
     - tmux
+    - zsh
