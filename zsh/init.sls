@@ -10,9 +10,8 @@ clear-zsh:
     - name: {{ grains.homedir }}/.zshrc
 
 oh-my-zsh:
-  git.latest:
-    - name: https://github.com/robbyrussell/oh-my-zsh.git
-    - target: {{ grains.homedir }}/.oh-my-zsh
+  cmd.run:
+    - name: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 link-zsh:
   file.symlink:

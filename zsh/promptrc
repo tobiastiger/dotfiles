@@ -1,0 +1,32 @@
+ZSH_THEME="spaceship"
+
+SPACESHIP_KUBECONTEXT_SYMBOL="  "
+SPACESHIP_KUBECONTEXT_PREFIX="within"
+
+SPACESHIP_CHAR_SYMBOL="   "
+
+SPACESHIP_GIT_SYMBOL=" "
+SPACESHIP_GIT_BRANCH_COLOR="red"
+
+SPACESHIP_VI_MODE_PREFIX="\n"
+SPACESHIP_VI_MODE_COLOR="green"
+SPACESHIP_VI_MODE_INSERT=" "
+SPACESHIP_VI_MODE_NORMAL=" " 
+
+SPACESHIP_PROMPT_ORDER=(
+  dir
+  git
+  kubecontext
+  exec_time
+  jobs
+  vi_mode
+)
+
+plugins=(
+  git
+  docker
+  vi-mode
+)
+
+autoload -U promptinit; promptinit
+prompt spaceship
