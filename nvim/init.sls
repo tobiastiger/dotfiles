@@ -10,7 +10,7 @@ nvim-config:
     - force: True
 
 minpac:
-  git.cloned:
+  git.latest:
     - name: https://github.com/k-takata/minpac.git
     - target: {{ grains.homedir }}/.config/nvim/pack/minpac/opt/minpac
 

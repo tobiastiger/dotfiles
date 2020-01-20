@@ -3,7 +3,7 @@ install-tmux:
     - name: tmux
 
 tmux-plugin-manager:
-  git.cloned:
+  git.latest:
     - name: https://github.com/tmux-plugins/tpm
     - target: {{ grains.homedir }}/.tmux/plugins/tpm
 
