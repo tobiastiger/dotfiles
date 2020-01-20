@@ -10,8 +10,22 @@ clear-zsh:
     - name: {{ grains.homedir }}/.zshrc
 
 oh-my-zsh:
-  cmd.run:
-    - name: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  git.latest:
+    - name: https://github.com/robbyrussell/oh-my-zsh.git
+    - target: {{ grains.homedir }}/.oh-my-zsh
+
+create-zsh-folder:
+  file.directory:
+    - name: {{ grains.homedir }}/zsh
+    - user: {{ grains.user }}
+    - group: {{ grains.group }}
+
+link-prompt:
+  file.symlink:
+    - name: {{ grains.homedir }}/zsh/promptrc
+    - target: {{ grains.statesdir }}/zsh/promptrc
+    - user: {{ grains.user }}
+    - group: {{ grains.group }}
 
 link-zsh:
   file.symlink:
@@ -29,11 +43,6 @@ spaceship-prompt-oh-my-zsh:
     - name: {{ grains.homedir }}/.oh-my-zsh/custom/themes/spaceship.zsh-theme
     - target: {{ grains.homedir }}/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme
     - force: True
-
-syntax-highlightning:
-  git.latest:
-    - name: https://github.com/zsh-users/zsh-syntax-highlighting.git
-    - target: {{ grains.homedir }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
 {{ grains.homedir }}/.oh-my-zsh:
   file.directory:
