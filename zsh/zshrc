@@ -3,8 +3,8 @@ export ZSH="$HOME/.oh-my-zsh"
 export EDITOR="nvim"
 
 # Configuration for prompt
-if [ -f ~/zsh/promptrc ]; then
-    source ~/zsh/promptrc
+if [ -f ~/dotfiles/zsh/promptrc ]; then
+    source ~/dotfiles/zsh/promptrc
 fi
 
 source $ZSH/oh-my-zsh.sh
