@@ -35,7 +35,9 @@ git_setup_debian() {
   apt-get update
   apt-get install -y git
 
-  git clone https://github.com/tobiastiger/dotfiles.git $homedir/dotfiles
+  if ! git clone https://github.com/tobiastiger/dotfiles.git $homedir/dotfiles 2>/dev/null && [ -d $homedir/dotfiles ]; then
+      echo "dotfiles folder already exists; git clone aborted."
+  fi
 
   ln -sf $homedir/dotfiles/git/gitconfig $homedir/.gitconfig
 
@@ -49,9 +51,13 @@ nvim_setup_debian() {
 
   ln -sf $homedir/dotfiles/nvim/nvim $homedir/.config/nvim
 
-  git clone https://github.com/k-takata/minpac.git $homedir/.config/nvim/pack/minpac/opt/minpac
+  minpac_folder=$homedir/.config/nvim/pack/minpac/opt/minpac
 
-  chown -R $user:$group $homedir/.config/nvim
+  if ! git clone https://github.com/k-takata/minpac.git $minpac_folder 2>/dev/null && [ -d $minpac_folder ]; then
+      echo "minpac folder already exists; git clone aborted."
+  fi
+
+  chown -R $user:$group $homedir/.config/nvim $homedir/dotfiles/nvim/nvim/nvim
 }
 
 
@@ -59,7 +65,11 @@ tmux_setup_debian() {
   apt-get update
   apt-get install -y tmux
 
-  git clone https://github.com/tmux-plugins/tpm $homedir/.tmux/plugins/tpm
+  tpm_folder=$homedir/.tmux/plugins/tpm
+
+  if ! git clone https://github.com/tmux-plugins/tpm $tpm_folder 2>/dev/null && [ -d $tpm_folder ]; then
+      echo "tpm folder already exists; git clone aborted."
+  fi
 
   ln -sf $homedir/dotfiles/tmux/tmux.conf $homedir/.tmux.conf
 
@@ -71,9 +81,16 @@ zsh_setup_debian() {
   apt-get update
   apt-get install -y zsh
 
-  git clone https://github.com/robbyrussell/oh-my-zsh.git $homedir/.oh-my-zsh
+  oh_my_zsh_folder=$homedir/.oh-my-zsh
+  spaceship_folder=$homedir/.oh-my-zsh/custom/themes/spaceship-prompt
 
-  git clone https://github.com/denysdovhan/spaceship-prompt.git $homedir/.oh-my-zsh/custom/themes/spaceship-prompt
+  if ! git clone https://github.com/robbyrussell/oh-my-zsh.git $oh_my_zsh_folder 2>/dev/null && [ -d $oh_my_zsh_folder ]; then
+      echo "oh-my-zsh folder already exists; git clone aborted."
+  fi
+
+  if ! git clone https://github.com/denysdovhan/spaceship-prompt.git $spaceship_folder 2>/dev/null && [ -d $spaceship_folder ]; then
+      echo "Spaceship prompt folder already exists; git clone aborted."
+  fi
 
   ln -sf $homedir/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme $homedir/.oh-my-zsh/custom/themes/spaceship.zsh-theme
 
@@ -86,7 +103,7 @@ zsh_setup_debian() {
 main() {
   if [ "$os" = "Linux" ]; then
     if [ "$cmd" = "all" ]; then
-      printf "Setting up dotfiles\n"
+      echo "Setting up dotfiles..."
       git_setup_debian
       nvim_setup_debian
       tmux_setup_debian
@@ -94,26 +111,26 @@ main() {
     fi
 
     if [ "$cmd" = "git" ]; then
-      printf "Setting up git\n"
+      echo "Setting up git..."
       git_setup_debian
     fi
 
     if [ "$cmd" = "nvim" ]; then
-      printf "Setting up neovim\n"
+      echo "Setting up neovim..."
       nvim_setup_debian
     fi
     
     if [ "$cmd" = "tmux" ]; then
-      printf "Setting up tmux\n"
+      echo "Setting up tmux..."
       tmux_setup_debian
     fi
 
     if [ "$cmd" = "zsh" ]; then
-      printf "Setting up zsh\n"
+      echo "Setting up zsh..."
       zsh_setup_debian
     fi
 
-    printf "Done\n"
+    printf "Done.\n"
   fi
 }
 
