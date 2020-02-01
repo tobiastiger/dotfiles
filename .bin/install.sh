@@ -29,6 +29,23 @@ while :; do
 done
 
 
+alacritty_setup_debian() {
+  add-apt-repository -y ppa:mmstick76/alacritty
+  apt-get install alacritty
+
+  ln -sf $homedir/dotfiles/alacritty/alacritty.yml $homedir/.config/alacritty/alacritty.yml
+
+  chown -R $user:$group $homedir/.config/alacritty 
+}
+
+
+alacritty_setup_macos() {
+  brew cask install alacritty
+
+  ln -sf $homedir/dotfiles/alacritty/alacritty.yml $homedir/.config/alacritty/alacritty.yml
+}
+
+
 git_setup_debian() {
   apt-get -y install software-properties-common
   add-apt-repository ppa:git-core/ppa
@@ -176,9 +193,15 @@ main() {
     if [ "$cmd" = "all" ]; then
       echo "Setting up dotfiles..."
       git_setup_debian
+      alacritty_setup_debian
       nvim_setup_debian
       tmux_setup_debian
       zsh_setup_debian
+    fi
+
+    if [ "$cmd" = "alacritty" ]; then
+      echo "Setting up alacritty..."
+      alacritty_setup_debian
     fi
 
     if [ "$cmd" = "git" ]; then
@@ -208,9 +231,15 @@ main() {
     if [ "$cmd" = "all" ]; then
       echo "Setting up dotfiles..."
       git_setup_macos
+      alacritty_setup_macos
       nvim_setup_macos
       tmux_setup_macos
       zsh_setup_macos
+    fi
+
+    if [ "$cmd" = "alacritty" ]; then
+      echo "Setting up alacritty..."
+      alacritty_setup_macos
     fi
 
     if [ "$cmd" = "git" ]; then
