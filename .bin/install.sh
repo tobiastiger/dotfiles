@@ -33,6 +33,10 @@ alacritty_setup_debian() {
   add-apt-repository -y ppa:mmstick76/alacritty
   apt-get install alacritty
 
+  if [ ! -d $homedir/.config/alacritty ]; then
+    mkdir $homedir/.config/alacritty
+  fi
+
   ln -sf $homedir/dotfiles/alacritty/alacritty.yml $homedir/.config/alacritty/alacritty.yml
 
   chown -R $user:$group $homedir/.config/alacritty 
@@ -41,6 +45,10 @@ alacritty_setup_debian() {
 
 alacritty_setup_macos() {
   brew cask install alacritty
+
+  if [ ! -d $homedir/.config/alacritty ]; then
+    mkdir $homedir/.config/alacritty
+  fi
 
   ln -sf $homedir/dotfiles/alacritty/alacritty.yml $homedir/.config/alacritty/alacritty.yml
 }
