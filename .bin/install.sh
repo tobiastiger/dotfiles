@@ -153,23 +153,6 @@ tmux_setup_macos() {
 zsh_setup_debian() {
   apt-get update
   apt-get install -y zsh
-
-  oh_my_zsh_folder=$homedir/.oh-my-zsh
-  spaceship_folder=$homedir/.oh-my-zsh/custom/themes/spaceship-prompt
-
-  if ! git clone https://github.com/robbyrussell/oh-my-zsh.git $oh_my_zsh_folder 2>/dev/null && [ -d $oh_my_zsh_folder ]; then
-      echo "oh-my-zsh folder already exists; git clone aborted."
-  fi
-
-  if ! git clone https://github.com/denysdovhan/spaceship-prompt.git $spaceship_folder 2>/dev/null && [ -d $spaceship_folder ]; then
-      echo "Spaceship prompt folder already exists; git clone aborted."
-  fi
-
-  ln -sf $homedir/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme $homedir/.oh-my-zsh/custom/themes/spaceship.zsh-theme
-
-  ln -sf $homedir/dotfiles/zsh/zshrc $homedir/.zshrc
-
-  chown -R $user:$group $homedir/.oh-my-zsh $homedir/.zshrc
 }
 
 
