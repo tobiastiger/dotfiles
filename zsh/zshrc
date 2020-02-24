@@ -1,10 +1,5 @@
 export EDITOR="nvim"
 
-# Configuration for prompt
-if [ -f ~/dotfiles/zsh/promptrc ]; then
-    source ~/dotfiles/zsh/promptrc
-fi
-
 alias v="nvim"
 
 # This is something for git so that certain commands know what branch to go against
@@ -13,6 +8,5 @@ export REVIEW_BASE=master
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-#  # Set Spaceship ZSH as a prompt
-#  autoload -U promptinit; promptinit
-#  prompt spaceship
+export STARSHIP_CONFIG=~/dotfiles/zsh/starship.toml
+eval "$(starship init zsh)"
