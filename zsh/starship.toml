@@ -1,3 +1,9 @@
-[character]
-symbol = " \ufa36"
-#symbol = " ➜" 
+[aws]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[python]
+symbol = " "
+pyenv_version_name = true
